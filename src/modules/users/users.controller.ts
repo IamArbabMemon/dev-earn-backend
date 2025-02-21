@@ -18,9 +18,6 @@ export class UsersController {
   async findAll(): Promise<User[]> {
     try {
       const users: User[] = await this.usersService.findAll();
-      if (users.length < 1) {
-        throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
-      }
       return users;
     } catch (error) {
       // Log the error (optional)
