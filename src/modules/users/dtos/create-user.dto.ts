@@ -5,6 +5,8 @@ import {
   MaxLength,
   IsDate,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -20,6 +22,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsDate()
+  @Type(() => Date)
   dob: Date;
 
   @IsNotEmpty()
