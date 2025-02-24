@@ -18,11 +18,11 @@ export class AuthController {
 
     @Get()
     async getSession(@Request() req: any, @Session() session: Record<string, any>) {
-        console.log(session);
-        console.log(session.id)
-        console.log(req.session)
-        console.log(req.user)
-        console.log(req.passport)
+
+        console.log(req.session.passport.user);
+        console.log(req.user);
+
+
     }
 
 }
