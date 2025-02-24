@@ -1,4 +1,15 @@
-import { Controller, Post, Get, Body, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  UsePipes,
+  ValidationPipe,
+  HttpException,
+  HttpStatus,
+  Param,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './schemas/users.schema';
@@ -12,7 +23,6 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
-
 
   @Get()
   async findAll(): Promise<User[]> {
@@ -30,4 +40,13 @@ export class UsersController {
       );
     }
   }
+
+  @Get('/:id')
+  async getUserById(@Param('id') id: string) {
+    const user = await this.usersService.findUserById(id);
+    if (!user)
+      throw new NotFoundException();
+    return user;
+  }
+
 }

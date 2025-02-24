@@ -17,6 +17,19 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().select("-__v");
+    return this.userModel.find().select('-__v -password');
   }
+
+  async findUserById(id: string): Promise<User | null> {
+    const user = await this.userModel.findById(id);
+    return user ? user : null;
+  }
+
+  async findUserByUsername(username: string): Promise<User | null> {
+    const user = await this.userModel.findOne({ username });
+    console.log("inside service user finingd ", user)
+    return user ? user : null;
+  }
+
+
 }
