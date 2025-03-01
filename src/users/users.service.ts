@@ -25,9 +25,9 @@ export class UsersService {
     return user ? user : null;
   }
 
-  async findUserByUsername(username: string): Promise<User | null> {
+  async findUserByUsername(username: string): Promise<any> {
     const user = await this.userModel.findOne({ username });
-    console.log("inside service user finingd ", user)
+    console.log("inside service user find by username ", user)
     return user ? user : null;
   }
 
