@@ -33,6 +33,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix('/api/v1');
   app.use(cookieParser());
 
@@ -46,6 +47,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  app.enableCors({
+    origin: true
+  });
   await app.listen(process.env.PORT ?? 3000);
 }
 
