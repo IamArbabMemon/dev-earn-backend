@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/users.schema';
@@ -29,6 +29,14 @@ export class UsersService {
     const user = await this.userModel.findOne({ username });
     console.log("inside service user find by username ", user)
     return user ? user : null;
+  }
+
+  async deleteUserById(id: string): Promise<any> {
+    const user = this.userModel.findByIdAndDelete(id);
+    if (!user)
+      throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+
+    return user;
   }
 
 

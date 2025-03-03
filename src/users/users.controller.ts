@@ -65,6 +65,7 @@ import {
   Param,
   NotFoundException,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiBody, ApiParam } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -116,4 +117,20 @@ export class UsersController {
     if (!user) throw new NotFoundException();
     return user;
   }
+
+
+  @Delete("/:id")
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a user by ID' })
+  @ApiResponse({ status: 200, description: 'Return the user.', type: User })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiParam({ name: 'id', required: true, description: 'The ID of the user to delete' })
+  async deleteUserById(@Param('id') id: string): Promise<User> {
+    const user = await this.usersService.deleteUserById(id);
+    return user;
+  }
+
+
+
 }
